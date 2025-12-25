@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DriftV8 - BMW M2 G87 Fan</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Extra styling */
+  body {
+    scroll-behavior: smooth;
+  }
+  .drift-hover:hover {
+    transform: rotate(3deg) scale(1.05);
+    transition: all 0.3s ease-in-out;
+  }
+  .hero-img {
+    transition: transform 0.5s ease-in-out;
+  }
+  .hero-img:hover {
+    transform: rotate(-5deg) scale(1.1);
+  }
+</style>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+<!-- Header -->
+<header class="flex justify-between items-center p-6 bg-gradient-to-r from-blue-800 to-black shadow-lg fixed w-full z-50">
+  <h1 class="text-3xl font-bold tracking-wide">DriftV8</h1>
+  <nav class="space-x-6">
+    <a href="#portfolio" class="hover:text-blue-400 transition">Portfolio</a>
+    <a href="#games" class="hover:text-blue-400 transition">Games</a>
+    <a href="#about" class="hover:text-blue-400 transition">About</a>
+    <a href="#contact" class="hover:text-blue-400 transition">Contact</a>
+  </nav>
+</header>
+
+<!-- Hero -->
+<section class="flex flex-col justify-center items-center h-screen bg-black pt-20">
+  <img src="https://i.imgur.com/2a6j3We.png" alt="BMW M2 G87" class="w-96 hero-img">
+  <h2 class="text-5xl font-extrabold mt-8 text-blue-500 drop-shadow-lg">BMW M2 G87 Fan</h2>
+  <p class="text-xl mt-4 text-gray-300">Portfolio | Games | Cars</p>
+  <a href="#portfolio" class="mt-6 px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg text-lg font-bold transition">Explore Now</a>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="p-10 bg-gray-800">
+  <h2 class="text-4xl font-bold mb-6 text-blue-400">Portfolio</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <img src="https://i.imgur.com/0X0X0X0.png" alt="Project 1" class="rounded">
+      <h3 class="text-xl font-semibold mt-2">Project 1</h3>
+      <p class="text-gray-400">Cool project description.</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <img src="https://i.imgur.com/0X0X0X0.png" alt="Project 2" class="rounded">
+      <h3 class="text-xl font-semibold mt-2">Project 2</h3>
+      <p class="text-gray-400">Another awesome project.</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <img src="https://i.imgur.com/0X0X0X0.png" alt="Project 3" class="rounded">
+      <h3 class="text-xl font-semibold mt-2">Project 3</h3>
+      <p class="text-gray-400">Gaming clip showcase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Games -->
+<section id="games" class="p-10 bg-black">
+  <h2 class="text-4xl font-bold mb-6 text-blue-500">Games</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <h3 class="text-xl font-semibold mt-2">Mini Game 1</h3>
+      <p class="text-gray-400">Play a fun mini game!</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <h3 class="text-xl font-semibold mt-2">Mini Game 2</h3>
+      <p class="text-gray-400">Challenge yourself here!</p>
+    </div>
+    <div class="bg-gray-900 p-4 rounded-xl drift-hover">
+      <h3 class="text-xl font-semibold mt-2">Mini Game 3</h3>
+      <p class="text-gray-400">Retro arcade fun!</p>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="p-10 bg-gray-800">
+  <h2 class="text-4xl font-bold mb-6 text-blue-400">About Me</h2>
+  <p class="text-gray-300 text-lg max-w-3xl mx-auto">
+    Hi! I'm a BMW M2 G87 fan, game enthusiast, and web developer. I love cars, coding, and creating interactive experiences. Follow my journey and check out my projects and mini games.
+  </p>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="p-10 bg-black">
+  <h2 class="text-4xl font-bold mb-6 text-blue-500">Contact</h2>
+  <form class="max-w-lg mx-auto flex flex-col gap-4">
+    <input type="text" placeholder="Your Name" class="p-3 rounded bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <input type="email" placeholder="Your Email" class="p-3 rounded bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <textarea placeholder="Your Message" class="p-3 rounded bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-600 p-3 rounded font-bold transition">Send Message</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer class="p-6 bg-gray-900 text-gray-500 text-center">
+  &copy; 2025 DriftV8. All Rights Reserved.
+</footer>
+
+</body>
+</html>
