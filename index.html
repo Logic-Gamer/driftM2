@@ -3,190 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quick.AI</title>
+<title>Quick AI</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
 <style>
-:root { --m2-blue: #1c69d4; --m2-red: #e10600; --bg-dark: #05050a; }
-* { box-sizing: border-box; scroll-behavior: smooth; }
-body { margin:0; font-family:'Share Tech Mono', monospace; background:#05050a; color:white; overflow-x:hidden; }
-header { position:relative; text-align:center; padding:100px 20px; z-index:1; }
-h1 { font-family:'Orbitron',sans-serif; font-size:clamp(3rem,7vw,5rem); color:white; text-shadow:0 0 20px var(--m2-blue); }
-p { font-size:1.2rem; opacity:0.9; text-shadow:0 0 10px black; }
-nav { position:fixed; top:0; width:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; gap:20px; padding:15px 0; z-index:2; font-family:'Orbitron',sans-serif; }
-nav a { color:white; text-decoration:none; font-weight:700; transition:0.3s; padding:10px 15px; border-radius:10px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
-nav a:hover { color: var(--m2-blue); text-shadow:0 0 15px var(--m2-blue); background: rgba(255,255,255,0.1); }
-section { padding:60px 20px; max-width:800px; margin:0 auto; position:relative; z-index:1; text-align:center; }
-canvas#bg { position: fixed; inset:0; z-index:0; }
-footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-index:1; }
+* { box-sizing: border-box; }
+body {
+  margin:0;
+  font-family:'Share Tech Mono', monospace;
+  background:#05050a;
+  color:white;
+  overflow-x:hidden;
+}
 
-#chat-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px) saturate(150%); border-radius:25px; padding:25px; display:flex; flex-direction:column; gap:15px; margin:40px auto; }
-#chat-messages { height:500px; overflow-y:auto; border-radius:15px; padding:15px; background: rgba(0,0,0,0.3); }
-#chat-input { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
-#chat-input input { flex:1; min-width:180px; padding:12px 15px; border-radius:15px; border:none; background: rgba(255,255,255,0.05); color:white; }
-#chat-input button { padding:12px 20px; border:none; border-radius:15px; background: var(--m2-blue); color:white; cursor:pointer; font-weight:bold; font-family:'Orbitron', sans-serif; }
+canvas#bg { position:fixed; inset:0; z-index:0; }
 
-.message { padding:8px 12px; border-radius:12px; margin-bottom:8px; max-width:80%; word-wrap:break-word; }
-.message.user { align-self:flex-end; background: rgba(28,105,212,0.5); text-align:right; }
-.message.bot { align-self:flex-start; background: rgba(225,16,0,0.4); text-align:left; }
+nav {
+  position:fixed; top:0; width:100%;
+  display:flex; justify-content:center; gap:20px;
+  padding:15px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(20px);
+  z-index:10;
+}
 
-.typing-dot { display:inline-block; width:6px; height:6px; margin:0 2px; background:white; border-radius:50%; animation: blink 1s infinite; }
-.typing-dot:nth-child(2) { animation-delay:0.2s; }
-.typing-dot:nth-child(3) { animation-delay:0.4s; }
-@keyframes blink { 0%,20%,50%,80%,100% {opacity:0;} 40%,60%,90% {opacity:1;} }
+nav a {
+  color:white; text-decoration:none;
+  padding:10px 20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  transition:.3s;
+}
 
-img.generated-img, video.generated-video { max-width:100%; margin-top:10px; border-radius:15px; }
+nav a:hover { background:rgba(255,255,255,0.25); color:black; }
+
+header {
+  text-align:center;
+  padding:120px 20px 60px;
+  position:relative; z-index:1;
+}
+
+h1 {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(3rem,7vw,5rem);
+  text-shadow:0 0 20px white;
+}
+
+section {
+  max-width:900px;
+  margin:0 auto;
+  padding:40px 20px;
+  position:relative; z-index:1;
+}
+
+#chat {
+  background:rgba(255,255,255,0.06);
+  backdrop-filter: blur(25px);
+  border-radius:25px;
+  padding:25px;
+}
+
+#messages {
+  height:400px;
+  overflow-y:auto;
+  background:rgba(0,0,0,0.4);
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+.msg {
+  padding:10px 15px;
+  border-radius:15px;
+  margin-bottom:10px;
+  max-width:80%;
+}
+
+.user { background:rgba(255,255,255,0.2); margin-left:auto; }
+.bot  { background:rgba(255,255,255,0.08); }
+
+.controls {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.controls input {
+  flex:1;
+  padding:12px;
+  border-radius:15px;
+  border:none;
+  background:rgba(255,255,255,0.1);
+  color:white;
+}
+
+.controls button {
+  padding:12px 18px;
+  border:none;
+  border-radius:15px;
+  background:rgba(255,255,255,0.12);
+  color:white;
+  cursor:pointer;
+  font-family:'Orbitron',sans-serif;
+  transition:.3s;
+}
+
+.controls button:hover {
+  background:rgba(255,255,255,0.3);
+  color:black;
+}
+
+footer {
+  text-align:center;
+  padding:40px;
+  opacity:.7;
+  position:relative; z-index:1;
+}
 </style>
 </head>
+
 <body>
 <canvas id="bg"></canvas>
 
 <nav>
   <a href="#home">Home</a>
-  <a href="#chat">Quick AI</a>
+  <a href="#ai">Quick AI</a>
 </nav>
 
 <header id="home">
   <h1>Quick AI</h1>
-  <p style="margin-top:-50px; font-family:Orbitron, sans-serif; font-size:16px;">AI Chat + Image + Video Generator</p>
+  <p>Chat • Voice • Image • Video</p>
 </header>
 
-<section id="chat">
-  <h2>Chat with AI</h2>
-  <div id="chat-container">
-    <div id="chat-messages"></div>
-    <div id="chat-input">
-      <input type="text" id="user-message" placeholder="Type your message...">
-      <button id="send-btn">Send</button>
-      <button id="voice-btn">🎤</button>
-      <button id="img-btn">🖼 Generate Image</button>
-      <button id="video-btn">🎥 Generate Video</button>
+<section id="ai">
+  <div id="chat">
+    <div id="messages"></div>
+
+    <div class="controls">
+      <input id="input" placeholder="Ask Quick AI...">
+      <button onclick="send()">Send</button>
+      <button onclick="voice()">🎤</button>
+      <button onclick="mock('Image generated.')">🖼</button>
+      <button onclick="mock('Video generated.')">🎥</button>
     </div>
   </div>
 </section>
 
-<footer>&copy; 2025 | Quick AI</footer>
+<footer>© 2025 Quick AI</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gif.js/dist/gif.js"></script>
 <script>
-// Background particles
-const canvas=document.getElementById('bg');
-const ctx=canvas.getContext('2d');
-function resize(){canvas.width=innerWidth; canvas.height=innerHeight;}
-window.addEventListener('resize',resize); resize();
-const particles=Array.from({length:350},()=>({
-  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-  r: Math.random()*3+1, dx: (Math.random()-0.5)*3, dy: (Math.random()-0.5)*3,
-  color: Math.random()>0.5?'rgba(28,105,212,0.9)':'rgba(225,16,0,0.9)'
+/* BACKGROUND */
+const c=document.getElementById('bg'),x=c.getContext('2d');
+function r(){c.width=innerWidth;c.height=innerHeight}
+addEventListener('resize',r);r();
+let p=[...Array(300)].map(()=>({
+  x:Math.random()*c.width,y:Math.random()*c.height,
+  dx:(Math.random()-.5)*2,dy:(Math.random()-.5)*2,r:Math.random()*2+1
 }));
-function animate(){ ctx.fillStyle='rgba(0,0,0,0.15)'; ctx.fillRect(0,0,canvas.width,canvas.height);
-particles.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill(); p.x+=p.dx; p.y+=p.dy;
-if(p.x<0||p.x>canvas.width)p.dx*=-1; if(p.y<0||p.y>canvas.height)p.dy*=-1; });
-requestAnimationFrame(animate);}
-animate();
+(function a(){
+  x.fillStyle='rgba(0,0,0,.2)';x.fillRect(0,0,c.width,c.height);
+  p.forEach(o=>{
+    x.beginPath();x.arc(o.x,o.y,o.r,0,7);x.fillStyle='white';x.fill();
+    o.x+=o.dx;o.y+=o.dy;
+    if(o.x<0||o.x>c.width)o.dx*=-1;
+    if(o.y<0||o.y>c.height)o.dy*=-1;
+  });requestAnimationFrame(a);
+})();
 
-// Chat + Voice + Media
-const sendBtn=document.getElementById('send-btn');
-const voiceBtn=document.getElementById('voice-btn');
-const imgBtn=document.getElementById('img-btn');
-const videoBtn=document.getElementById('video-btn');
-const userInput=document.getElementById('user-message');
-const chatMessages=document.getElementById('chat-messages');
-const OPENAI_API_KEY='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';
-const OPENAI_IMAGE_KEY='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';
-
-async function sendMessage(msg){
-  if(!msg) return; addMessage(msg,'user'); userInput.value='';
-  const typingDiv=document.createElement('div'); typingDiv.className='message bot';
-  typingDiv.innerHTML='<span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>';
-  chatMessages.appendChild(typingDiv); chatMessages.scrollTop=chatMessages.scrollHeight;
-
-  try {
-    const res=await fetch('https://api.openai.com/v1/chat/completions',{
-      method:'POST', headers:{ 'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_API_KEY}` },
-      body: JSON.stringify({ model:"gpt-3.5-turbo", messages:[{role:"user",content:msg}], max_tokens:300 })
-    });
-    const data=await res.json();
-    const botMsg=data.choices[0].message.content; typingDiv.textContent=botMsg;
-    chatMessages.scrollTop=chatMessages.scrollHeight;
-
-    const utter=new SpeechSynthesisUtterance(botMsg);
-    utter.lang='en-US'; utter.pitch=0.6; utter.rate=0.9;
-    const voices=speechSynthesis.getVoices();
-    const mercedesVoice=voices.find(v=>v.name.includes('Google US English')||v.name.includes('Male'))||voices[0];
-    if(mercedesVoice) utter.voice=mercedesVoice;
-    speechSynthesis.speak(utter);
-
-  } catch(e){ typingDiv.textContent="Error: Could not reach AI.";}
+/* CHAT */
+const msgs=document.getElementById('messages');
+function add(t,c){
+  const d=document.createElement('div');
+  d.className='msg '+c; d.textContent=t;
+  msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight;
 }
 
-function addMessage(text,type){ 
-  const div=document.createElement('div'); div.className=`message ${type}`; div.textContent=text; 
-  chatMessages.appendChild(div); chatMessages.scrollTop=chatMessages.scrollHeight;
+function send(){
+  const v=input.value.trim();
+  if(!v)return;
+  add(v,'user'); input.value='';
+  setTimeout(()=>{
+    const reply="Quick AI is online. Backend connection pending.";
+    add(reply,'bot');
+    speak(reply);
+  },600);
 }
 
-// Voice input
-voiceBtn.addEventListener('click',()=>{
-  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SpeechRecognition){ alert('Voice not supported'); return;}
-  const recognition=new SpeechRecognition(); recognition.lang='en-US'; recognition.interimResults=false; recognition.start();
-  recognition.onresult=(e)=>sendMessage(e.results[0][0].transcript);
-});
+/* VOICE */
+function voice(){
+  const R=window.SpeechRecognition||webkitSpeechRecognition;
+  if(!R) return alert("Voice not supported");
+  const r=new R(); r.lang='en-US'; r.start();
+  r.onresult=e=>send(input.value=e.results[0][0].transcript);
+}
 
-// Image generation
-imgBtn.addEventListener('click',async()=>{
-  const prompt=userInput.value.trim(); if(!prompt) return; addMessage(`Generating image: ${prompt}`,'user');
-  userInput.value='';
-  const res=await fetch('https://api.openai.com/v1/images/generations',{
-    method:'POST',
-    headers:{ 'Content-Type':'application/json','Authorization':`Bearer ${OPENAI_IMAGE_KEY}` },
-    body: JSON.stringify({ prompt, n:1, size:"512x512" })
-  });
-  const data=await res.json();
-  const imgUrl=data.data[0].url;
-  const imgDiv=document.createElement('img'); imgDiv.src=imgUrl; imgDiv.className='generated-img';
-  chatMessages.appendChild(imgDiv); chatMessages.scrollTop=chatMessages.scrollHeight;
-});
+/* TTS */
+function speak(t){
+  const u=new SpeechSynthesisUtterance(t);
+  u.rate=.9; u.pitch=.7;
+  speechSynthesis.speak(u);
+}
 
-// Video generation (GIF)
-videoBtn.addEventListener('click', async () => {
-  const prompt = userInput.value.trim();
-  if (!prompt) return;
-  addMessage(`Generating video: ${prompt}`, 'user');
-  userInput.value = '';
-
-  const gif = new GIF({ workers: 2, quality: 10, workerScript: 'https://cdn.jsdelivr.net/npm/gif.js/dist/gif.worker.js' });
-
-  for (let i = 0; i < 5; i++) {
-    try {
-      const res = await fetch('https://api.openai.com/v1/images/generations', {
-        method: 'POST',
-        headers: { 'Content-Type':'application/json', 'Authorization': `Bearer ${OPENAI_IMAGE_KEY}` },
-        body: JSON.stringify({ prompt, n:1, size:"512x512", user: `frame${i}` })
-      });
-      const data = await res.json();
-      const img = new Image();
-      img.src = data.data[0].url;
-      await new Promise(resolve => img.onload = resolve);
-      gif.addFrame(img, { delay: 500 });
-    } catch (e) {
-      addMessage("Error generating frame "+i,'bot');
-    }
-  }
-
-  gif.on('finished', blob => {
-    const videoURL = URL.createObjectURL(blob);
-    const gifEl = document.createElement('img');
-    gifEl.src = videoURL;
-    gifEl.className = 'generated-video';
-    chatMessages.appendChild(gifEl);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-  });
-
-  gif.render();
-});
-
-sendBtn.addEventListener('click',()=>sendMessage(userInput.value));
-userInput.addEventListener('keypress',e=>{if(e.key==='Enter') sendMessage(userInput.value);});
+/* MOCK MEDIA */
+function mock(t){ add(t,'bot'); }
 </script>
 </body>
 </html>
