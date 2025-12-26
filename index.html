@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>DriftV8 | BMW Style</title>
+<title>DriftV8 | BMW Chat</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -20,10 +20,14 @@ nav a { color:white; text-decoration:none; font-weight:700; transition: 0.3s; pa
 nav a:hover { color: var(--m2-blue); text-shadow:0 0 15px var(--m2-blue); background: rgba(255,255,255,0.1); }
 section { padding:60px 20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; text-align:center; }
 canvas#bg { position: fixed; inset:0; z-index:0; }
-footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-index:1; display:flex; flex-direction:column; gap:15px; align-items:center; }
-button.social-btn { cursor:pointer; font-family:'Orbitron',sans-serif; font-weight:bold; border:none; border-radius:15px; padding:10px 20px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); color:white; display:flex; align-items:center; gap:10px; transition:0.3s; }
-button.social-btn:hover { background: rgba(255,255,255,0.15); color: var(--m2-blue); }
-button.social-btn img { width:20px; height:20px; }
+footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-index:1; }
+#chat-container { background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); border-radius:20px; max-width:600px; margin:40px auto; padding:20px; display:flex; flex-direction:column; gap:15px; }
+#chat-messages { height:300px; overflow-y:auto; border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:10px; }
+#chat-input { display:flex; gap:10px; }
+#chat-input input { flex:1; padding:10px; border-radius:10px; border:none; background: rgba(255,255,255,0.05); color:white; }
+#chat-input button { padding:10px 15px; border:none; border-radius:10px; background: var(--m2-blue); color:white; cursor:pointer; }
+.message { text-align:left; padding:5px 10px; border-radius:10px; margin-bottom:5px; background: rgba(255,255,255,0.1); }
+.message.user { text-align:right; background: rgba(28,105,212,0.3); }
 </style>
 </head>
 <body>
@@ -32,38 +36,26 @@ button.social-btn img { width:20px; height:20px; }
 <!-- Navbar -->
 <nav>
   <a href="#home">Home</a>
-  <a href="#about">About Me</a>
-  <a href="#contact">Contact</a>
+  <a href="#chat">Chat</a>
 </nav>
 
 <header id="home">
   <h1>DriftV8</h1>
-  <p style="margin-top: -50px; font-family: Orbitron, sans-serif; font-size: 16px;">Inspired By BMW</p>
+  <p style="margin-top: -50px; font-family: Orbitron, sans-serif; font-size: 16px;">AI Chat Bot</p>
 </header>
 
-<section id="about">
-  <h2>About Me</h2>
-  <p>Welcome to DriftV8, a website dedicated to BMW-style car inspiration and drifting culture.</p>
-</section>
-
-<section id="contact">
-  <h2>Contact</h2>
-  <p>Feel free to reach out via social media!</p>
-  <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-top:20px;">
-    <button class="social-btn" onclick="window.open('https://twitter.com/yourprofile', '_blank')">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter logo"> Twitter
-    </button>
-    <button class="social-btn" onclick="window.open('https://instagram.com/yourprofile', '_blank')">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram logo"> Instagram
-    </button>
-    <button class="social-btn" onclick="window.open('https://facebook.com/yourprofile', '_blank')">
-      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook logo"> Facebook
-    </button>
+<section id="chat">
+  <h2>Chat with AI</h2>
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="user-message" placeholder="Type your message...">
+      <button id="send-btn">Send</button>
+    </div>
   </div>
 </section>
 
 <footer>
-  <a href="#home" class="social-btn">Home</a>
   &copy; 2025 DriftV8
 </footer>
 
@@ -73,16 +65,14 @@ const canvas=document.getElementById('bg');
 const ctx=canvas.getContext('2d');
 function resize(){canvas.width=innerWidth; canvas.height=innerHeight;}
 window.addEventListener('resize',resize); resize();
-
 const particles=Array.from({length:350},()=>({
   x: Math.random()*canvas.width,
   y: Math.random()*canvas.height,
   r: Math.random()*3+1,
   dx: (Math.random()-0.5)*3,
   dy: (Math.random()-0.5)*3,
-  color: Math.random()>0.5?'rgba(255,255,255,1)':'rgba(223,223,222,1)'
+  color: Math.random()>0.5?'rgba(28,105,212,0.9)':'rgba(223,16,0,0.9)'
 }));
-
 function animate(){ 
   ctx.fillStyle='rgba(0,0,0,0.15)'; 
   ctx.fillRect(0,0,canvas.width,canvas.height); 
@@ -99,6 +89,41 @@ function animate(){
   requestAnimationFrame(animate); 
 }
 animate();
+
+// Simple free AI chat example using free API
+const sendBtn = document.getElementById('send-btn');
+const userInput = document.getElementById('user-message');
+const chatMessages = document.getElementById('chat-messages');
+
+sendBtn.addEventListener('click', async ()=>{
+  const msg = userInput.value.trim();
+  if(!msg) return;
+  addMessage(msg,'user');
+  userInput.value='';
+  addMessage('Typing...','bot');
+  
+  try {
+    const response = await fetch('https://api.affiliatebot.io/free/chat', { // Example free API
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await response.json();
+    const botMsg = data.reply || "Sorry, I couldn't respond.";
+    chatMessages.lastChild.textContent = botMsg; // replace "Typing..."
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  } catch(e) {
+    chatMessages.lastChild.textContent = "Error: API not reachable.";
+  }
+});
+
+function addMessage(text, type){
+  const div = document.createElement('div');
+  div.className = `message ${type}`;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 </script>
 </body>
 </html>
