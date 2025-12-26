@@ -8,7 +8,6 @@
 <style>
 :root {
   --m2-blue: #1c69d4;
-  --m2-red: #e10600;
   --bg-dark: #05050a;
 }
 * { box-sizing: border-box; }
@@ -17,12 +16,14 @@ header { position:relative; text-align:center; padding:100px 20px; z-index:1; }
 h1 { font-family:'Orbitron',sans-serif; font-size:clamp(3rem,7vw,5rem); color: white; text-shadow:0 0 20px var(--m2-blue); }
 p { font-size:1.2rem; opacity:0.9; text-shadow:0 0 10px black; }
 nav { position:fixed; top:0; width:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; gap:20px; padding:15px 0; z-index:2; font-family:'Orbitron',sans-serif; }
-nav a, .social-btn { color:white; text-decoration:none; font-weight:700; transition: 0.3s; padding:10px 15px; border-radius:10px; background: rgba(255,255,255,0.1); }
-nav a:hover, .social-btn:hover { color: var(--m2-blue); text-shadow:0 0 15px var(--m2-blue); background: rgba(255,255,255,0.2); }
+nav a { color:white; text-decoration:none; font-weight:700; transition: 0.3s; padding:10px 15px; border-radius:10px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+nav a:hover { color: var(--m2-blue); text-shadow:0 0 15px var(--m2-blue); background: rgba(255,255,255,0.1); }
 section { padding:60px 20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; text-align:center; }
 canvas#bg { position: fixed; inset:0; z-index:0; }
-footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-index:1; display:flex; flex-direction:column; gap:15px; }
-button.social-btn { cursor:pointer; font-family:'Orbitron',sans-serif; font-weight:bold; border:none; }
+footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-index:1; display:flex; flex-direction:column; gap:15px; align-items:center; }
+button.social-btn { cursor:pointer; font-family:'Orbitron',sans-serif; font-weight:bold; border:none; border-radius:15px; padding:10px 20px; background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); color:white; display:flex; align-items:center; gap:10px; transition:0.3s; }
+button.social-btn:hover { background: rgba(255,255,255,0.15); color: var(--m2-blue); }
+button.social-btn img { width:20px; height:20px; }
 </style>
 </head>
 <body>
@@ -33,7 +34,6 @@ button.social-btn { cursor:pointer; font-family:'Orbitron',sans-serif; font-weig
   <a href="#home">Home</a>
   <a href="#about">About Me</a>
   <a href="#contact">Contact</a>
-  <a href="#cars">BMW M2 G87</a>
 </nav>
 
 <header id="home">
@@ -49,17 +49,17 @@ button.social-btn { cursor:pointer; font-family:'Orbitron',sans-serif; font-weig
 <section id="contact">
   <h2>Contact</h2>
   <p>Feel free to reach out via social media!</p>
-  <!-- Social media buttons -->
-  <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
-    <button class="social-btn" onclick="window.open('https://twitter.com/yourprofile', '_blank')">Twitter</button>
-    <button class="social-btn" onclick="window.open('https://instagram.com/yourprofile', '_blank')">Instagram</button>
-    <button class="social-btn" onclick="window.open('https://facebook.com/yourprofile', '_blank')">Facebook</button>
+  <div style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-top:20px;">
+    <button class="social-btn" onclick="window.open('https://twitter.com/yourprofile', '_blank')">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/twitter.svg" alt="Twitter logo"> Twitter
+    </button>
+    <button class="social-btn" onclick="window.open('https://instagram.com/yourprofile', '_blank')">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram logo"> Instagram
+    </button>
+    <button class="social-btn" onclick="window.open('https://facebook.com/yourprofile', '_blank')">
+      <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook logo"> Facebook
+    </button>
   </div>
-</section>
-
-<section id="cars">
-  <h2>BMW M2 G87</h2>
-  <img src="fb84fb22-4a97-476e-92fb-c15196c74466.png" alt="BMW M2 G87" style="border-radius:20px; width:80%; max-width:600px; margin-top:20px;">
 </section>
 
 <footer>
