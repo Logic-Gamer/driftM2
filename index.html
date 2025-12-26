@@ -1,3 +1,5 @@
+
+Je zei:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,24 +10,20 @@
 <style>
 :root {
   --m2-blue: #1c69d4;
+  --m2-red: #e10600;
   --bg-dark: #05050a;
 }
 * { box-sizing: border-box; }
 body { margin:0; font-family:'Share Tech Mono', monospace; background:#05050a; color:white; overflow-x:hidden; }
 header { position:relative; text-align:center; padding:100px 20px; z-index:1; }
-h1 { 
-  font-family:'Orbitron',sans-serif; 
-  font-size:clamp(3rem,7vw,5rem); 
-  color: white; 
-  text-shadow: 0 0 20px var(--m2-blue); /* only blue glow now */ 
-}
+h1 { font-family:'Orbitron',sans-serif; font-size:clamp(3rem,7vw,5rem); color: white; text-shadow:0 0 20px var(--m2-blue),0 0 40px var(--m2-red); }
 p { font-size:1.2rem; opacity:0.9; text-shadow:0 0 10px black; }
 nav { position:fixed; top:0; width:100%; background:rgba(0,0,0,0.7); display:flex; justify-content:center; gap:40px; padding:15px 0; z-index:2; font-family:'Orbitron',sans-serif; }
 nav a { color:white; text-decoration:none; font-weight:700; transition: 0.3s; }
 nav a:hover { color: var(--m2-blue); text-shadow:0 0 15px var(--m2-blue); }
 section { padding:60px 20px; max-width:1200px; margin:0 auto; position:relative; z-index:1; }
 h2 { font-family:'Orbitron',sans-serif; text-align:center; margin-bottom:40px; color:white; }
-#car-section { display:flex; justify-content:flex-start; gap:50px; flex-wrap: wrap; }
+#car-section { display:flex; justify-content:flex-start; gap:50px; }
 #car-specs-container { display:flex; flex-direction:column; align-items:flex-start; }
 #car-specs { background: rgba(255,255,255,0.02); backdrop-filter: blur(60px) saturate(180%); padding:25px; border-radius:20px; color:white; max-width:400px; margin-bottom:20px; }
 #view-toggle { padding:10px 20px; border-radius:15px; border:none; background: rgba(255,255,255,0.1); color:white; font-family:'Orbitron',sans-serif; font-weight:bold; cursor:pointer; transition:0.3s; width:100%; }
@@ -37,84 +35,37 @@ footer { text-align:center; opacity:0.8; padding:40px; position:relative; z-inde
 </head>
 <body>
 <canvas id="bg"></canvas>
-
 <nav>
-  <a href="https://about.driftv8.xyz">About Me</a>
-  <a href="https://contact.driftv8.xyz">Contact</a>
-  <a href="https://cars.driftv8.xyz/m2g87">BMW M2 G87</a>
+  <a href="/about">About Me</a>
+  <a href="/contact">Contact</a>
+  <a href="/cars/m2g87">BMW M2 G87</a>
 </nav>
-
 <header>
   <h1>DriftV8</h1>
   <p style="margin-top: -50px; font-family: Orbitron, sans-serif; font-size: 16px;">Inspired By BMW</p>
 </header>
-
-<section id="car-section">
-  <div id="car-specs-container">
-    <div id="car-specs">
-      <h2>BMW M2 G87 Specs</h2>
-      <ul>
-        <li>Engine: 3.0L Twin-Turbo</li>
-        <li>Power: 453 hp</li>
-        <li>0-100 km/h: 4.2s</li>
-        <li>Top Speed: 250 km/h</li>
-      </ul>
-    </div>
-    <button id="view-toggle">View Engine 3D</button>
-  </div>
-  <img id="car-3d-view" src="fb84fb22-4a97-476e-92fb-c15196c74466.png" alt="3D Car View">
-</section>
-
-<footer>
-  &copy; 2025 DriftV8
-</footer>
-
+</div>
 <script>
-// Background particles
-const canvas = document.getElementById('bg');
-const ctx = canvas.getContext('2d');
-function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-window.addEventListener('resize', resize); resize();
-
-const particles = Array.from({length:350}, () => ({
-  x: Math.random()*canvas.width,
-  y: Math.random()*canvas.height,
-  r: Math.random()*3+1,
-  dx: (Math.random()-0.5)*3,
-  dy: (Math.random()-0.5)*3,
-  color: Math.random()>0.5?'rgba(28,105,212,0.9)':'rgba(225,16,0,0.9)'
-}));
-
-function animate(){
-  ctx.fillStyle='rgba(0,0,0,0.15)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p => {
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle = p.color;
-    ctx.fill();
-    p.x += p.dx;
-    p.y += p.dy;
-    if(p.x<0||p.x>canvas.width) p.dx*=-1;
-    if(p.y<0||p.y>canvas.height) p.dy*=-1;
-  });
-  requestAnimationFrame(animate);
-}
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+function resize(){canvas.width=innerWidth; canvas.height=innerHeight;}
+window.addEventListener('resize',resize); resize();
+const particles=Array.from({length:350},()=>({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*3+1, dx: (Math.random()-0.5)*3, dy: (Math.random()-0.5)*3, color: Math.random()>0.5?'rgba(28,105,212,0.9)':'rgba(225,16,0,0.9)' }));
+function animate(){ ctx.fillStyle='rgba(0,0,0,0.15)'; ctx.fillRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{ ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill(); p.x+=p.dx; p.y+=p.dy; if(p.x<0||p.x>canvas.width)p.dx*=-1; if(p.y<0||p.y>canvas.height)p.dy*=-1; }); requestAnimationFrame(animate); }
 animate();
 
-// 3D Car View Toggle
 let showingCar = true;
 const imgElement = document.getElementById('car-3d-view');
-const toggleBtn = document.getElementById('view-toggle');
+imgElement.src = 'fb84fb22-4a97-476e-92fb-c15196c74466.png'; // Gebruik dezelfde map als html bestand
 
-toggleBtn.addEventListener('click', () => {
+document.getElementById('view-toggle').addEventListener('click', ()=>{
   showingCar = !showingCar;
   if(showingCar){
-    toggleBtn.textContent = 'View Engine 3D';
-    imgElement.src = 'fb84fb22-4a97-476e-92fb-c15196c74466.png'; // Replace with car PNG
+    document.getElementById('view-toggle').textContent = 'View Car 3D';
+    imgElement.src = 'fb84fb22-4a97-476e-92fb-c15196c74466.png';
   } else {
-    toggleBtn.textContent = 'View Car 3D';
-    imgElement.src = 'fb84fb22-4a97-476e-92fb-c15196c74466.png'; // Replace with engine PNG
+    document.getElementById('view-toggle').textContent = 'View Engine 3D';
+    imgElement.src = 'fb84fb22-4a97-476e-92fb-c15196c74466.png'; // Vervang door engine PNG
   }
 });
 </script>
